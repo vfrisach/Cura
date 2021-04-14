@@ -8,11 +8,13 @@ from typing import List, cast
 from UM.Event import CallFunctionEvent
 from UM.FlameProfiler import pyqtSlot
 from UM.Math.Vector import Vector
+from UM.Qt.Bindings.MainWindow import MainWindow
 from UM.Scene.Selection import Selection
 from UM.Scene.Iterator.BreadthFirstIterator import BreadthFirstIterator
 from UM.Operations.GroupedOperation import GroupedOperation
 from UM.Operations.RemoveSceneNodeOperation import RemoveSceneNodeOperation
 from UM.Operations.TranslateOperation import TranslateOperation
+from UM.Resources import Resources
 
 import cura.CuraApplication
 from cura.Operations.SetParentOperation import SetParentOperation
@@ -25,6 +27,7 @@ from cura.Operations.SetBuildPlateNumberOperation import SetBuildPlateNumberOper
 from UM.Logger import Logger
 from UM.Scene.SceneNode import SceneNode
 
+import os
 
 class CuraActions(QObject):
     def __init__(self, parent: QObject = None) -> None:
@@ -44,6 +47,18 @@ class CuraActions(QObject):
         cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
 
     @pyqtSlot()
+    def openEjemplo1(self) -> None: 
+        cura.CuraApplication.CuraApplication.getInstance()._openFile(Resources.getPath(Resources.Images, os.path.join("models","ejemplo1.stl")))
+
+    @pyqtSlot()
+    def openEjemplo2(self) -> None: 
+        cura.CuraApplication.CuraApplication.getInstance()._openFile(Resources.getPath(Resources.Images, os.path.join("models","ejemplo2.stl")))
+
+    @pyqtSlot()
+    def openEjemplo3(self) -> None: 
+        cura.CuraApplication.CuraApplication.getInstance()._openFile(Resources.getPath(Resources.Images, os.path.join("models","ejemplo3.stl")))
+
+    @pyqtSlot()
     def openBugReportPage(self) -> None:
         event = CallFunctionEvent(self._openUrl, [QUrl("https://github.com/Ultimaker/Cura/issues/new/choose")], {})
         cura.CuraApplication.CuraApplication.getInstance().functionEvent(event)
@@ -59,6 +74,28 @@ class CuraActions(QObject):
             camera.setPosition(Vector(-80, 250, 700) * diagonal_size / 375)
             camera.setPerspective(True)
             camera.lookAt(Vector(0, 0, 0))
+
+    @pyqtSlot(int)
+    def addPause(self, altura: int) -> None:
+        """Añade una pausa a la altura indicada por altura
+
+        :param altura: La altura a la que tiene que hacerse la pausa.
+        """
+        # exts = cura.CuraApplication.CuraApplication.getInstance().getExtensions()
+        # pausa = next((x for x in exts if x._plugin_id=="Dynamical3DPause"), None)
+        pausa = cura.CuraApplication.CuraApplication.getPause(self)
+        if pausa is not None:
+            pausa.addPoint(altura)
+
+    @pyqtSlot()
+    def showPauses(self) -> None:
+        """Muestra la pantalla de pausas
+        """
+        # exts = cura.CuraApplication.CuraApplication.getInstance().getExtensions()
+        # pausa = next((x for x in exts if x._plugin_id=="Dynamical3DPause"), None)
+        pausa = cura.CuraApplication.CuraApplication.getPause(self)
+        if pausa is not None:
+            pausa.showWindow()
 
     @pyqtSlot()
     def centerSelection(self) -> None:

@@ -26,8 +26,9 @@ Rectangle {
 
     Keys.forwardTo: menu.__contentItem;
 
-    property color menuBackgroundColor: UM.Theme.getColor("viewport_overlay")
-    property color menuForeColor: UM.Theme.getColor("xray")
+    property color menuBackgroundColor: UM.Theme.getColor("primary_button_text")
+    property color menuForeColor: UM.Theme.getColor("secondary_button_hover")
+    property color menuTextColor: UM.Theme.getColor("viewport_overlay")
     
     MenuBar
     {
@@ -44,20 +45,23 @@ Rectangle {
             }
 
             itemDelegate: Rectangle {
-                implicitWidth: lab.contentWidth + 15   
-                implicitHeight: lab.contentHeight      
+                implicitWidth: lab.contentWidth + 20   
+                implicitHeight: lab.contentHeight +5     
                 color: styleData.selected || styleData.open ? menuForeColor : menuBackgroundColor
+                radius: styleData.selected ? 3 : 0
                 Label {
                     id: lab
                     text: formatMnemonic(styleData.text, true) 
-                    font: UM.Theme.getFont("large_bold")
+                    font: UM.Theme.getFont("medium")
+                    color: menuTextColor
+                    leftPadding: 10
                 }
             }
 
             menuStyle: MenuStyle {
                 id: menuStyle
                 frame: Rectangle {
-                    color: menuBackgroundColor
+                    color: menuBackgroundColor 
                 }
                 itemDelegate {
                     background: Rectangle {
@@ -65,11 +69,14 @@ Rectangle {
                         radius: styleData.selected ? 3 : 0
                     }
                     label: Label {
+                        id: lbl
                         text: formatMnemonic(styleData.text, true) 
-                        font: UM.Theme.getFont("large")
+                        font: UM.Theme.getFont("medium")
+                        color: menuTextColor
                     }
                     shortcut: Label {
                         text: styleData.shortcut
+                        color: menuTextColor
                     }
                 }
             }

@@ -6,8 +6,8 @@ import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
 
-import UM 1.0 as UM
-import Cura 1.0 as Cura
+import UM 1.3 as UM
+import Cura 1.1 as Cura
 
 Item
 {
@@ -236,6 +236,17 @@ Item
             sliderRoot.updateRangeHandle()
         }
 
+        function upValueManually() {
+            setActiveHandle(upperHandle)
+            sliderRoot.manuallyChanged = true
+            upperHandle.setValue(upperHandleLabel.value +1)
+        }  
+        function downValueManually() {
+            setActiveHandle(upperHandle)
+            sliderRoot.manuallyChanged = true
+            upperHandle.setValue(upperHandleLabel.value -1)
+        }   
+
         Keys.onUpPressed: upperHandleLabel.setValue(upperHandleLabel.value + ((event.modifiers & Qt.ShiftModifier) ? 10 : 1))
         Keys.onDownPressed: upperHandleLabel.setValue(upperHandleLabel.value - ((event.modifiers & Qt.ShiftModifier) ? 10 : 1))
 
@@ -280,8 +291,7 @@ Item
     }
 
     // Lower handle
-    Rectangle
-    {
+    Rectangle {
         id: lowerHandle
 
         y: sliderRoot.height - sliderRoot.handleSize
@@ -370,6 +380,7 @@ Item
             }
         }
 
+        //etiqueta del límite inferior
         SimulationSliderLabel
         {
             id: lowerHandleLabel
@@ -387,5 +398,115 @@ Item
             busy: UM.SimulationView.busy
             setValue: lowerHandle.setValueManually // connect callback functions
         }
+
+        function upValueManually() {
+            setActiveHandle(lowerHandle)
+            sliderRoot.manuallyChanged = true
+            lowerHandle.setValue(lowerHandleLabel.value +1)
+        }  
+        function downValueManually() {
+            setActiveHandle(lowerHandle)
+            sliderRoot.manuallyChanged = true
+            lowerHandle.setValue(lowerHandleLabel.value -1)
+        }     
     }
+
+    UM.SimpleButton {
+        id: aumentaLimiteSuperiorButton
+        iconSource: UM.Theme.getIcon("plus")
+        //anchors.right: track.left
+        anchors.left: track.right
+        anchors.verticalCenter: track.top
+        anchors.leftMargin: UM.Theme.getSize("default_margin").height
+        //anchors.rightMargin: UM.Theme.getSize("default_margin").height
+        width: UM.Theme.getSize("small_button").width
+        height: UM.Theme.getSize("small_button").height
+        hoverColor: UM.Theme.getColor("small_button_text_hover")
+        color: UM.Theme.getColor("small_button_text")
+        iconMargin: UM.Theme.getSize("thick_lining").width
+        UM.TooltipArea {
+            anchors.fill: parent
+            text: "Aumentar capa superior"
+        }
+        onClicked: {
+            upperHandle.upValueManually();                                                  
+        } 
+    }
+
+    UM.SimpleButton {
+        id: disminuyeLimiteSuperiorButton
+        iconSource: UM.Theme.getIcon("minus")
+        // anchors.right: aumentaLimiteInferiorButton.left
+        anchors.left: aumentaLimiteInferiorButton.right
+        anchors.verticalCenter: track.top
+        width: UM.Theme.getSize("small_button").width * 0.66
+        height: UM.Theme.getSize("small_button").height
+        hoverColor: UM.Theme.getColor("small_button_text_hover")
+        color: UM.Theme.getColor("small_button_text")
+        iconMargin: UM.Theme.getSize("thick_lining").width
+        UM.TooltipArea {
+            anchors.fill: parent
+            text: "Disminuir capa superior"
+        }
+        onClicked: {
+            upperHandle.downValueManually();                                                  
+        } 
+    } 
+
+    UM.SimpleButton {
+        id: aumentaLimiteInferiorButton
+        iconSource: UM.Theme.getIcon("plus")
+        // anchors.right: track.left
+        anchors.left: track.right
+        anchors.verticalCenter: track.bottom
+        // anchors.rightMargin: UM.Theme.getSize("default_margin").height
+        anchors.leftMargin: UM.Theme.getSize("default_margin").height
+        width: UM.Theme.getSize("small_button").width
+        height: UM.Theme.getSize("small_button").height
+        hoverColor: UM.Theme.getColor("small_button_text_hover")
+        color: UM.Theme.getColor("small_button_text")
+        iconMargin: UM.Theme.getSize("thick_lining").width
+        UM.TooltipArea {
+            anchors.fill: parent
+            text: "Aumentar capa inferior"
+        }
+        onClicked: {
+            lowerHandle.upValueManually();                                                  
+        } 
+    }
+
+
+    UM.SimpleButton {
+        id: disminuyeLimiteInferiorButton
+        iconSource: UM.Theme.getIcon("minus")
+        // anchors.right: aumentaLimiteInferiorButton.left
+        anchors.left: aumentaLimiteInferiorButton.right
+        anchors.verticalCenter: track.bottom
+        width: UM.Theme.getSize("small_button").width * 0.66
+        height: UM.Theme.getSize("small_button").height
+        hoverColor: UM.Theme.getColor("small_button_text_hover")
+        color: UM.Theme.getColor("small_button_text")
+        iconMargin: UM.Theme.getSize("thick_lining").width
+        UM.TooltipArea {
+            anchors.fill: parent
+            text: "Disminuir capa superior"
+        }
+        onClicked: {
+            lowerHandle.downValueManually();                                                  
+        } 
+    } 
+
+
+    // Button {
+    //     id: pausaButton
+    //     height: UM.Theme.getSize("button").height
+        
+    //     anchors.horizontalCenter: track.horizontalCenter
+    //     anchors.top: track.bottom
+    //     anchors.topMargin: UM.Theme.getSize("default_margin").height
+    //     text: "Pausa"
+    //     onClicked: {
+    //         CuraActions.addPause(activeHandle.getValue());                                     
+    //     } 
+    // }
 }

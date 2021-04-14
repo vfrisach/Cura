@@ -66,6 +66,9 @@ Item
     property alias about: aboutAction;
 
     property alias dynamical: dynamicalAction;
+    property alias openModeloEjemplo1: openModeloEjemplo1Action;
+    property alias openModeloEjemplo2: openModeloEjemplo2Action;
+    property alias openModeloEjemplo3: openModeloEjemplo3Action;
 
     property alias toggleFullScreen: toggleFullScreenAction;
     property alias exitFullScreen: exitFullScreenAction
@@ -254,6 +257,29 @@ Item
         iconName: "help-contents";
         onTriggered: CuraActions.openDynamical();
     }
+
+    Action {
+        id: openModeloEjemplo1Action;
+        text: "Ejemplo 1";
+        onTriggered: CuraActions.openEjemplo1();
+    }
+    Action {
+        id: openModeloEjemplo2Action;
+        text: "Ejemplo 2";
+        onTriggered: CuraActions.openEjemplo2();
+    }
+    Action {
+        id: openModeloEjemplo3Action;
+        text: "Ejemplo 3";
+        onTriggered: CuraActions.openEjemplo3();
+    }
+   
+    // Action {
+    //     id: addPauseAction;
+    //     text: "Pausa";
+    //     onTriggered: CuraActions.addPause(7);
+    // }
+
 
     Action {
         id: whatsNewAction;
@@ -460,4 +486,6 @@ Item
         text: catalog.i18nc("@action:menu", "&Marketplace")
         iconName: "plugins_browse"
     }
+
+
 }

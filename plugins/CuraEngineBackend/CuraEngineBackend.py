@@ -228,10 +228,11 @@ class CuraEngineBackend(QObject, Backend):
     @pyqtSlot()
     def stopSlicing(self) -> None:
         self.setState(BackendState.NotStarted)
+        CuraApplication.setDefaultCursor()
         if self._slicing:  # We were already slicing. Stop the old job.
             self._terminate()
             self._createSocket()
-
+         
         if self._process_layers_job is not None:  # We were processing layers. Stop that, the layers are going to change soon.
             Logger.log("i", "Aborting process layers job...")
             self._process_layers_job.abort()
@@ -239,11 +240,14 @@ class CuraEngineBackend(QObject, Backend):
 
         if self._error_message:
             self._error_message.hide()
+       
+
+
 
     @pyqtSlot()
     def forceSlice(self) -> None:
         """Manually triggers a reslice"""
-
+        CuraApplication.setWaitCursor()
         self.markSliceAll()
         self.slice()
 
@@ -756,6 +760,9 @@ class CuraEngineBackend(QObject, Backend):
         if self._build_plates_to_be_sliced:
             self.enableTimer()  # manually enable timer to be able to invoke slice, also when in manual slice mode
             self._invokeSlice()
+        else:
+            # Pasamos directamente a PreviewStage
+            CuraApplication.getInstance().getController().setActiveStage("PreviewStage")
 
     def _onGCodeLayerMessage(self, message: Arcus.PythonMessage) -> None:
         """Called when a g-code message is received from the engine.

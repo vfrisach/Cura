@@ -26,9 +26,11 @@ UM.MainWindow
         let result = "";
         if(PrintInformation !== null && PrintInformation.jobName != "")
         {
+            result += PrintInformation.abbrMachine + " - ";
             result += PrintInformation.jobName + " - ";
         }
         result += CuraApplication.applicationDisplayName;
+       
         return result;
     }
 
@@ -99,11 +101,9 @@ UM.MainWindow
         }
     }
 
-    Connections
-    {
+    Connections {
         target: CuraApplication
-        onInitializationFinished:
-        {
+        onInitializationFinished: {
             // Workaround silly issues with QML Action's shortcut property.
             //
             // Currently, there is no way to define shortcuts as "Application Shortcut".
@@ -144,13 +144,9 @@ UM.MainWindow
         }
     }
 
-    Item
-    {
+    Item {
         id: backgroundItem
         anchors.fill: parent
-
-        
-
 
         //DeleteSelection on the keypress backspace event
         Keys.onPressed:
@@ -167,68 +163,68 @@ UM.MainWindow
             
         }
 
-        Item {
-            id: headerBackground
-            anchors {
-                top: applicationMenu.bottom
-                left: parent.left
-                right: parent.right
-            }
-            height: stageMenu.source != "" ? Math.round(mainWindowHeader.height + stageMenu.height / 2) : mainWindowHeader.height
+        // Item {
+        //     id: headerBackground
+        //     anchors {
+        //         top: applicationMenu.bottom
+        //         left: parent.left
+        //         right: parent.right
+        //     }
+        //     height: stageMenu.source != "" ? Math.round(mainWindowHeader.height + stageMenu.height / 2) : mainWindowHeader.height
 
-            LinearGradient
-            {
-                anchors.fill: parent
-                start: Qt.point(0, 0)
-                end: Qt.point(parent.width, 0)
-                gradient: Gradient
-                {
-                    GradientStop
-                    {
-                        position: 0.0
-                        color: UM.Theme.getColor("main_window_header_background")
-                    }
-                    GradientStop
-                    {
-                        position: 0.5
-                        color: UM.Theme.getColor("main_window_header_background_gradient")
-                    }
-                    GradientStop
-                    {
-                        position: 1.0
-                        color: UM.Theme.getColor("main_window_header_background")
-                    }
-                }
-            }
+        //     LinearGradient
+        //     {
+        //         anchors.fill: parent
+        //         start: Qt.point(0, 0)
+        //         end: Qt.point(parent.width, 0)
+        //         gradient: Gradient
+        //         {
+        //             GradientStop
+        //             {
+        //                 position: 0.0
+        //                 color: UM.Theme.getColor("main_window_header_background")
+        //             }
+        //             GradientStop
+        //             {
+        //                 position: 0.5
+        //                 color: UM.Theme.getColor("main_window_header_background_gradient")
+        //             }
+        //             GradientStop
+        //             {
+        //                 position: 1.0
+        //                 color: UM.Theme.getColor("main_window_header_background")
+        //             }
+        //         }
+        //     }
 
-            // This is a placehoder for adding a pattern in the header
-            Image
-            {
-                id: backgroundPattern
-                anchors.fill: parent
-                fillMode: Image.Tile
-                source: UM.Theme.getImage("header_pattern")
-                horizontalAlignment: Image.AlignLeft
-                verticalAlignment: Image.AlignTop
-            }
-        }
+        //     // This is a placehoder for adding a pattern in the header
+        //     Image
+        //     {
+        //         id: backgroundPattern
+        //         anchors.fill: parent
+        //         fillMode: Image.Tile
+        //         source: UM.Theme.getImage("header_pattern")
+        //         horizontalAlignment: Image.AlignLeft
+        //         verticalAlignment: Image.AlignTop
+        //     }
+        // }
 
-        MainWindowHeader {
-            id: mainWindowHeader
-            anchors
-            {
-                left: parent.left
-                right: parent.right
-                top: applicationMenu.bottom
-            }
-        }
+        // MainWindowHeader {
+        //     id: mainWindowHeader
+        //     anchors
+        //     {
+        //         left: parent.left
+        //         right: parent.right
+        //         top: applicationMenu.bottom
+        //     }
+        // }
 
         Item {
             id: contentItem
 
             anchors
             {
-                top: mainWindowHeader.bottom
+                top: applicationMenu.bottom
                 bottom: parent.bottom
                 left: parent.left
                 right: parent.right
@@ -236,8 +232,7 @@ UM.MainWindow
 
             Keys.forwardTo: applicationMenu
 
-            DropArea
-            {
+            DropArea {
                 // The drop area is here to handle files being dropped onto Cura.
                 anchors.fill: parent
                 onDropped:
@@ -267,27 +262,25 @@ UM.MainWindow
                 }
             }
 
-            ObjectSelector
-            {
+            ObjectSelector {
                 id: objectSelector
                 visible: CuraApplication.platformActivity
                 anchors
                 {
                     bottom: jobSpecs.top
-                    left: toolbar.right
+                    left: parent.left
                     leftMargin: UM.Theme.getSize("default_margin").width
                     rightMargin: UM.Theme.getSize("default_margin").width
                     bottomMargin: UM.Theme.getSize("narrow_margin").height
                 }
             }
 
-            JobSpecs
-            {
+            JobSpecs {
                 id: jobSpecs
                 visible: CuraApplication.platformActivity
                 anchors
                 {
-                    left: toolbar.right
+                    left: parent.left
                     bottom: viewOrientationControls.top
                     leftMargin: UM.Theme.getSize("default_margin").width
                     rightMargin: UM.Theme.getSize("default_margin").width
@@ -296,20 +289,55 @@ UM.MainWindow
                 }
             }
 
-            ViewOrientationControls
-            {
+            ViewOrientationControls {
                 id: viewOrientationControls
 
-                anchors
-                {
-                    left: toolbar.right
+                anchors {
+                    left: parent.left
                     bottom: parent.bottom
                     margins: UM.Theme.getSize("default_margin").width
                 }
             }
 
-            Toolbar
-            {
+            UM.SimpleButton {
+                id: undoButton
+                iconSource: UM.Theme.getIcon("reset")
+                anchors.left: viewOrientationControls.right
+                anchors.verticalCenter: viewOrientationControls.verticalCenter
+                anchors.leftMargin: UM.Theme.getSize("wide_margin").height
+                width: UM.Theme.getSize("small_button").width
+                height: UM.Theme.getSize("small_button").height
+                hoverColor: UM.Theme.getColor("small_button_text_hover")
+                color: UM.Theme.getColor("small_button_text")
+                iconMargin: UM.Theme.getSize("thick_lining").width
+                UM.TooltipArea {
+                    anchors.fill: parent
+                    text: "Deshacer"
+                }
+                onClicked: UM.OperationStack.undo();
+                enabled: UM.OperationStack.canUndo;
+            }
+
+            UM.SimpleButton {
+                id: redoButton
+                iconSource: UM.Theme.getIcon("redo")
+                anchors.left: undoButton.right
+                anchors.verticalCenter: viewOrientationControls.verticalCenter
+                anchors.leftMargin: UM.Theme.getSize("default_margin").height
+                width: UM.Theme.getSize("small_button").width
+                height: UM.Theme.getSize("small_button").height
+                hoverColor: UM.Theme.getColor("small_button_text_hover")
+                color: UM.Theme.getColor("small_button_text")
+                iconMargin: UM.Theme.getSize("thick_lining").width
+                UM.TooltipArea {
+                    anchors.fill: parent
+                    text: "Rehacer"
+                }
+                onClicked: UM.OperationStack.redo();
+                enabled: UM.OperationStack.canRedo;
+            }
+
+            Toolbar {
                 // The toolbar is the left bar that is populated by all the tools (which are dynamicly populated by
                 // plugins)
                 id: toolbar
@@ -317,13 +345,14 @@ UM.MainWindow
                 property int mouseX: base.mouseX
                 property int mouseY: base.mouseY
 
-                anchors
-                {
+                anchors {
                     verticalCenter: parent.verticalCenter
-                    left: parent.left
+                    right: parent.right
                 }
                 visible: CuraApplication.platformActivity && !PrintInformation.preSliced
             }
+
+
 
             // A hint for the loaded content view. Overlay items / controls can safely be placed in this area
             Item {
@@ -357,6 +386,22 @@ UM.MainWindow
                 }
             }
 
+            Configbar {
+                // Barra de acceso a la configuración de impresoras, extruders, settings de impresión, etc. En el lateral izquierdo
+                id: configbar
+
+                property int mouseX: base.mouseX
+                property int mouseY: base.mouseY
+
+                anchors {
+                    //verticalCenter: parent.verticalCenter
+                    top: parent.top
+                    topMargin: UM.Theme.getSize("stage_menu").height
+                    left: parent.left
+                }
+                visible: true
+            }
+
             Loader
             {
                 // The stage menu is, as the name implies, a menu that is defined by the active stage.
@@ -384,7 +429,7 @@ UM.MainWindow
 
                 // The printSetupSelector is defined here so that the setting list doesn't need to get re-instantiated
                 // Every time the stage is changed.
-                property var printSetupSelector: Cura.PrintSetupSelector
+                property var printSetupSelector: Cura.Dynamical3DPrintSetupSelector
                 {
                    width: UM.Theme.getSize("print_setup_widget").width
                    height: UM.Theme.getSize("stage_menu").height
@@ -401,6 +446,8 @@ UM.MainWindow
                    }
                 }
             }
+
+
             UM.MessageStack
             {
                 anchors

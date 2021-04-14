@@ -10,20 +10,17 @@ import Cura 1.1 as Cura
 
 import "../components"
 
-Item
-{
+Item {
     id: backupsPage
     anchors.fill: parent
     anchors.margins: UM.Theme.getSize("wide_margin").width
 
-    ColumnLayout
-    {
+    ColumnLayout {
         spacing: UM.Theme.getSize("wide_margin").height
         width: parent.width
         anchors.fill: parent
 
-        Label
-        {
+        Label {
             id: backupTitle
             text: catalog.i18nc("@title", "My Backups")
             font: UM.Theme.getFont("large")
@@ -46,16 +43,14 @@ Item
             renderType: Text.NativeRendering
         }
 
-        BackupList
-        {
+        BackupList {
             id: backupList
             model: CuraDrive.backups
             Layout.fillWidth: true
             Layout.fillHeight: true
         }
 
-        Label
-        {
+        Label {
             text: catalog.i18nc("@backup_limit_info",
                 "During the preview phase, you'll be limited to 5 visible backups. Remove a backup to see older ones.")
             width: parent.width
@@ -66,8 +61,7 @@ Item
             renderType: Text.NativeRendering
         }
 
-        BackupListFooter
-        {
+        BackupListFooter {
             id: backupListFooter
             
         }

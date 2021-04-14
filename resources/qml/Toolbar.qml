@@ -7,13 +7,14 @@ import QtQuick.Controls 2.3
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-Item
-{
+Item {
     id: base
 
     width: buttons.width
     height: buttons.height
     property int activeY
+
+    property var pause: CuraApplication.getPause()
 
     Item
     {
@@ -108,11 +109,47 @@ Item
             }
         }
 
+        // rectángulo redondeado tras el botón de pausa
+        Rectangle {
+            anchors {
+                fill: pausaButton
+                leftMargin: -radius - border.width
+                rightMargin: -border.width
+                topMargin: -border.width
+                bottomMargin: -border.width
+            }
+            radius: UM.Theme.getSize("default_radius").width
+            color: UM.Theme.getColor("lining")
+        }
+
+        ToolbarButton {
+            id: pausaButton
+            text: "Pausas"
+            anchors.topMargin: UM.Theme.getSize("default_margin").height
+            anchors.top: toolButtons.bottom
+            anchors.right: parent.right
+            spacing: UM.Theme.getSize("default_lining").height
+            enabled: UM.SimulationView.layerActivity && CuraApplication.platformActivity
+            onClicked: {
+                CuraActions.showPauses();                                     
+            } 
+            toolItem: UM.RecolorImage {
+                source: UM.Theme.getIcon("pausa") 
+                color: UM.Theme.getColor("icon")
+                sourceSize: UM.Theme.getSize("button_icon")
+            }
+            Label {
+                text: pause.numeroPausas
+                color: UM.Theme.getColor("icon")
+                visible: pause.numeroPausas > 0
+                anchors.right: parent.right
+            }
+
+        }
+
         // Used to create a rounded rectangle behind the extruderButtons
-        Rectangle
-        {
-            anchors
-            {
+        Rectangle {
+            anchors {
                 fill: extruderButtons
                 leftMargin: -radius - border.width
                 rightMargin: -border.width
@@ -129,7 +166,7 @@ Item
             id: extruderButtons
 
             anchors.topMargin: UM.Theme.getSize("default_margin").height
-            anchors.top: toolButtons.bottom
+            anchors.top: pausaButton.bottom
             anchors.right: parent.right
             spacing: UM.Theme.getSize("default_lining").height
 
@@ -155,8 +192,10 @@ Item
     {
         id: panelBorder
 
-        anchors.left: parent.right
-        anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        // anchors.left: parent.right
+        // anchors.leftMargin: UM.Theme.getSize("default_margin").width
+        anchors.right: parent.left
+        anchors.rightMargin: UM.Theme.getSize("default_margin").width
         anchors.top: base.top
         anchors.topMargin: base.activeY
         z: buttons.z - 1

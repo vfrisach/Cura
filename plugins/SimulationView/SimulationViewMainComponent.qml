@@ -18,7 +18,7 @@ Item
 
 
     property bool isSimulationPlaying: false
-    readonly property real layerSliderSafeYMin: safeArea.y
+    readonly property real layerSliderSafeYMin: safeArea.y + 150 //ÑAPA: ajustar esto dinamicamente desde fuera
     readonly property real layerSliderSafeYMax: safeArea.y + safeArea.height
     readonly property real pathSliderSafeXMin: safeArea.x + playButton.width
     readonly property real pathSliderSafeXMax: safeArea.x + safeArea.width
@@ -204,10 +204,12 @@ Item
 
         anchors
         {
-            right: parent.right
+            // right: parent.right  
+            left: parent.left
             verticalCenter: parent.verticalCenter
             verticalCenterOffset: -(parent.height - layerSliderSafeYMax - layerSliderSafeYMin) / 2 // center between parent top and layerSliderSafeYMax
-            rightMargin: UM.Theme.getSize("default_margin").width
+            // rightMargin: UM.Theme.getSize("default_margin").width
+            leftMargin: UM.Theme.getSize("default_margin").width
             bottomMargin: heightMargin
             topMargin: heightMargin
         }

@@ -13,6 +13,9 @@ from PyQt5.QtGui import QColor, QIcon
 from PyQt5.QtQml import qmlRegisterUncreatableType, qmlRegisterSingletonType, qmlRegisterType
 from PyQt5.QtWidgets import QMessageBox
 
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication
+
 import UM.Util
 import cura.Settings.cura_empty_instance_containers
 from UM.Application import Application
@@ -159,7 +162,7 @@ class CuraApplication(QtApplication):
                          tray_icon_name = "dynamical-icon-32.png",
                          **kwargs)
 
-        self.default_theme = "Dynamical3D"
+        self.default_theme = "Dynamical3D-dark"
 
         self.change_log_url = "https://ultimaker.com/ultimaker-cura-latest-features"
 
@@ -597,6 +600,15 @@ class CuraApplication(QtApplication):
     def writeToLog(self, severity: str, message: str) -> None:
         Logger.log(severity, message)
 
+
+    @pyqtSlot()
+    def setWaitCursor() -> None:
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+
+    @pyqtSlot()
+    def setDefaultCursor() -> None:
+        QApplication.restoreOverrideCursor()
+
     # DO NOT call this function to close the application, use checkAndExitApplication() instead which will perform
     # pre-exit checks such as checking for in-progress USB printing, etc.
     # Except for the 'Decline and close' in the 'User Agreement'-step in the Welcome-pages, that should be a hard exit.
@@ -996,6 +1008,13 @@ class CuraApplication(QtApplication):
         return self._object_manager
 
     @pyqtSlot(result = QObject)
+    def getPause(self) -> None:
+        exts = cura.CuraApplication.CuraApplication.getInstance().getExtensions()
+        pausa = next((x for x in exts if x._plugin_id=="Dynamical3DPause"), None)
+        if pausa is not None:
+            return pausa
+
+    @pyqtSlot(result = QObject)
     def getExtrudersModel(self, *args) -> "ExtrudersModel":
         if self._extruders_model is None:
             self._extruders_model = ExtrudersModel(self)
@@ -1073,7 +1092,7 @@ class CuraApplication(QtApplication):
                 self._open_file_queue.append(event.file())
 
         return super().event(event)
-
+    
     def getAutoSave(self) -> Optional[AutoSave]:
         return self._auto_save
 
