@@ -360,7 +360,8 @@
 
         "machine_selector_widget": [12.0, 4.0],
         "machine_selector_widget_content": [10.0, 32.0],
-        "machine_selector_icon": [2.66, 2.66]
+        "machine_selector_icon": [2.66, 2.66],
+        "stage_menu": [0.0, 3.0]
 	}
     
 }

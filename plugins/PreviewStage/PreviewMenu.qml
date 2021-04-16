@@ -8,6 +8,8 @@ import QtQuick.Controls 2.3
 import UM 1.3 as UM
 import Cura 1.1 as Cura
 
+import QtGraphicalEffects 1.0 // For the dropshadow
+
 Item
 {
     id: previewMenu
@@ -24,14 +26,14 @@ Item
     {
         left: parent.left
         right: parent.right
-        leftMargin: UM.Theme.getSize("wide_margin").width
-        rightMargin: UM.Theme.getSize("wide_margin").width
+        leftMargin: UM.Theme.getSize("wide_margin").width * 10
+        rightMargin: UM.Theme.getSize("wide_margin").width * 10
     }
 
     Row
     {
         //ÑAPA: OCULTO EL PANEL COMPLETO PROVISIONALMENTE
-        visible: false
+        // visible: false
         id: stageMenuRow
 
         anchors.horizontalCenter: parent.horizontalCenter
@@ -62,26 +64,69 @@ Item
         {
             id: viewPanel
             height: parent.height
-            width: source != "" ? (previewMenu.width - viewsSelector.width - printSetupSelectorItem.width - 2 * (UM.Theme.getSize("wide_margin").width + UM.Theme.getSize("default_lining").width)) : 0
+            // width: source != "" ? (previewMenu.width - viewsSelector.width - printSetupSelectorItem.width - 2 * (UM.Theme.getSize("wide_margin").width + UM.Theme.getSize("default_lining").width)) : 0
+            width: source != "" ? (previewMenu.width - viewsSelector.width - returnToPrepareButton.width - 2 * (UM.Theme.getSize("wide_margin").width + UM.Theme.getSize("default_lining").width)) : 0
             source: UM.Controller.activeView != null && UM.Controller.activeView.stageMenuComponent != null ? UM.Controller.activeView.stageMenuComponent : ""
         }
 
         // Separator line
-        Rectangle
-        {
+        Rectangle {
             height: parent.height
             width: UM.Theme.getSize("default_lining").width
             color: UM.Theme.getColor("lining")
         }
+        
+       //Botón para volver al stage de preparación
+        Button {
+            id: returnToPrepareButton
+            text: catalog.i18nc("@button", "Prepare")
+            height: UM.Theme.getSize("stage_menu").height
+            width: UM.Theme.getSize("stage_menu").height
+            onClicked:  UM.Controller.setActiveStage("PrepareStage")
+            hoverEnabled: true
 
-        Item
-        {
-            id: printSetupSelectorItem
-            // This is a work around to prevent the printSetupSelector from having to be re-loaded every time
-            // a stage switch is done.
-            children: [printSetupSelector]
-            height: childrenRect.height
-            width: childrenRect.width
+            contentItem: Item
+            {
+                anchors.fill: parent
+                UM.RecolorImage
+                {
+                    id: buttonIcon
+                    anchors.centerIn: parent
+                    source: UM.Theme.getIcon("back")
+                    width: UM.Theme.getSize("button_icon").width
+                    height: UM.Theme.getSize("button_icon").height
+                    color: UM.Theme.getColor("icon")
+                    sourceSize.height: height
+                }
+            }
+
+            background: Cura.RoundedRectangle {
+                id: background
+                height: UM.Theme.getSize("stage_menu").height
+                width: UM.Theme.getSize("stage_menu").height
+                cornerSide: Cura.RoundedRectangle.Direction.Right
+                radius: UM.Theme.getSize("default_radius").width
+                color: returnToPrepareButton.hovered ? UM.Theme.getColor("action_button_hovered") : UM.Theme.getColor("action_button")
+            }
+
+            DropShadow {
+                id: shadow
+                // Don't blur the shadow
+                radius: 0
+                anchors.fill: background
+                source: background
+                verticalOffset: 2
+                visible: true
+                color: UM.Theme.getColor("action_button_shadow")
+                // Should always be drawn behind the background.
+                z: background.z - 1
+            }
+            Cura.ToolTip {
+                id: tooltip
+                tooltipText: returnToPrepareButton.text
+                visible: returnToPrepareButton.hovered
+                contentAlignment: Cura.ToolTip.ContentAlignment.AlignRight
+            }
         }
     }
 }

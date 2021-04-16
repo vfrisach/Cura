@@ -142,7 +142,7 @@ Item {
                 text: pause.numeroPausas
                 color: UM.Theme.getColor("icon")
                 visible: pause.numeroPausas > 0
-                anchors.right: parent.right
+                anchors.left: parent.left
             }
 
         }
