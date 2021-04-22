@@ -35,96 +35,100 @@ Cura.ExpandablePopupHorizontal
     contentPadding: UM.Theme.getSize("default_lining").width
     enabled: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.hasMaterials || Cura.MachineManager.activeMachine.hasVariants || Cura.MachineManager.activeMachine.hasVariantBuildplates : false; //Only let it drop down if there is any configuration that you could change.
 
-    headerItem: Item
-    {
-        // Horizontal list that shows the extruders and their materials
-        RowLayout
-        {
-            anchors.fill: parent
-            visible: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.hasMaterials : false
-            Repeater
-            {
-                model: extrudersModel
-                delegate: Item
-                {
-                    Layout.preferredWidth: Math.round(parent.width / extrudersModel.count)
-                    Layout.fillHeight: true
-
-                    // Extruder icon. Shows extruder index and has the same color as the active material.
-                    Cura.ExtruderIcon
-                    {
-                        id: extruderIcon
-                        materialColor: model.color
-                        extruderEnabled: model.enabled
-                        height: parent.height
-                        width: height
-                    }
-
-                    // Label for the brand of the material
-                    Label
-                    {
-                        id: typeAndBrandNameLabel
-
-                        text: model.material_brand + " " + model.material
-                        elide: Text.ElideRight
-                        font: UM.Theme.getFont("default")
-                        color: UM.Theme.getColor("text")
-                        renderType: Text.NativeRendering
-
-                        anchors
-                        {
-                            top: extruderIcon.top
-                            left: extruderIcon.right
-                            leftMargin: UM.Theme.getSize("default_margin").width
-                            right: parent.right
-                            rightMargin: UM.Theme.getSize("default_margin").width
-                        }
-                    }
-                    // Label that shows the name of the variant
-                    Label
-                    {
-                        id: variantLabel
-
-                        visible: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.hasVariants : false
-
-                        text: model.variant
-                        elide: Text.ElideRight
-                        font: UM.Theme.getFont("default_bold")
-                        color: UM.Theme.getColor("text")
-                        renderType: Text.NativeRendering
-
-                        anchors
-                        {
-                            left: extruderIcon.right
-                            leftMargin: UM.Theme.getSize("default_margin").width
-                            top: typeAndBrandNameLabel.bottom
-                            right: parent.right
-                            rightMargin:  UM.Theme.getSize("default_margin").width
-                        }
-                    }
-                }
-            }
+    headerItem: UM.RecolorImage {
+            source: UM.Theme.getIcon("settings") 
+            color: UM.Theme.getColor("icon")
+            sourceSize: UM.Theme.getSize("button_icon")
+            visible: true
         }
+        // Horizontal list that shows the extruders and their materials
+        // RowLayout
+        // {
+        //     anchors.fill: parent
+        //     visible: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.hasMaterials : false
+        //     Repeater
+        //     {
+        //         model: extrudersModel
+        //         delegate: Item
+        //         {
+        //             Layout.preferredWidth: Math.round(parent.width / extrudersModel.count)
+        //             Layout.fillHeight: true
+
+        //             // Extruder icon. Shows extruder index and has the same color as the active material.
+        //             Cura.ExtruderIcon
+        //             {
+        //                 id: extruderIcon
+        //                 materialColor: model.color
+        //                 extruderEnabled: model.enabled
+        //                 height: parent.height
+        //                 width: height
+        //             }
+
+        //             // Label for the brand of the material
+        //             Label
+        //             {
+        //                 id: typeAndBrandNameLabel
+
+        //                 text: model.material_brand + " " + model.material
+        //                 elide: Text.ElideRight
+        //                 font: UM.Theme.getFont("default")
+        //                 color: UM.Theme.getColor("text")
+        //                 renderType: Text.NativeRendering
+
+        //                 anchors
+        //                 {
+        //                     top: extruderIcon.top
+        //                     left: extruderIcon.right
+        //                     leftMargin: UM.Theme.getSize("default_margin").width
+        //                     right: parent.right
+        //                     rightMargin: UM.Theme.getSize("default_margin").width
+        //                 }
+        //             }
+        //             // Label that shows the name of the variant
+        //             Label
+        //             {
+        //                 id: variantLabel
+
+        //                 visible: Cura.MachineManager.activeMachine ? Cura.MachineManager.activeMachine.hasVariants : false
+
+        //                 text: model.variant
+        //                 elide: Text.ElideRight
+        //                 font: UM.Theme.getFont("default_bold")
+        //                 color: UM.Theme.getColor("text")
+        //                 renderType: Text.NativeRendering
+
+        //                 anchors
+        //                 {
+        //                     left: extruderIcon.right
+        //                     leftMargin: UM.Theme.getSize("default_margin").width
+        //                     top: typeAndBrandNameLabel.bottom
+        //                     right: parent.right
+        //                     rightMargin:  UM.Theme.getSize("default_margin").width
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         // Placeholder text if there is a configuration to select but no materials (so we can't show the materials per extruder).
-        Label
-        {
-            text: catalog.i18nc("@label", "Select configuration")
-            elide: Text.ElideRight
-            font: UM.Theme.getFont("medium")
-            color: UM.Theme.getColor("text")
-            renderType: Text.NativeRendering
+        // Label
+        // {
+        //     text: catalog.i18nc("@label", "Select configuration")
+        //     elide: Text.ElideRight
+        //     font: UM.Theme.getFont("medium")
+        //     color: UM.Theme.getColor("text")
+        //     renderType: Text.NativeRendering
 
-            visible: Cura.MachineManager.activeMachine ? !Cura.MachineManager.activeMachine.hasMaterials && (Cura.MachineManager.activeMachine.hasVariants || Cura.MachineManager.activeMachine.hasVariantBuildplates) : false
+        //     visible: Cura.MachineManager.activeMachine ? !Cura.MachineManager.activeMachine.hasMaterials && (Cura.MachineManager.activeMachine.hasVariants || Cura.MachineManager.activeMachine.hasVariantBuildplates) : false
 
-            anchors
-            {
-                left: parent.left
-                leftMargin: UM.Theme.getSize("default_margin").width
-                verticalCenter: parent.verticalCenter
-            }
-        }
-    }
+        //     anchors
+        //     {
+        //         left: parent.left
+        //         leftMargin: UM.Theme.getSize("default_margin").width
+        //         verticalCenter: parent.verticalCenter
+        //     }
+        // }
+    // }
 
     contentItem: Column
     {

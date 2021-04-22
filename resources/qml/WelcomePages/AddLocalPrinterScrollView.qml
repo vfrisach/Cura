@@ -24,7 +24,7 @@ Item
     property string currentSection: "Dynamical3D"
     // By default (when this list shows up) we always expand the "Ultimaker" section.
     property var preferredCategories: {
-        "Ultimaker B.V.": -2,
+        "Dynamical3D": -2,
         "Custom": -1
     }
 

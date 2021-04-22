@@ -93,107 +93,113 @@ Cura.ExpandablePopupHorizontal
     //         // }
     //         onExited: { machineSelector.visible=false }
     // }
-    
-    headerItem: Cura.IconWithText
-    {
-        text:
-        {
-            // if (isNetworkPrinter && Cura.MachineManager.activeMachineNetworkGroupName != "")
-            // {
-            //     return Cura.MachineManager.activeMachineNetworkGroupName
-            // }
-            // if(Cura.MachineManager.activeMachine != null)
-            // {
-            //     return Cura.MachineManager.activeMachine.name
-            // }
-            return ""
-        }
-        source:
-        {
-            return UM.Theme.getIcon("category_machine") 
-            // if (isGroup)
-            // {
-            //     return UM.Theme.getIcon("printer_group")
-            // }
-            // else if (isNetworkPrinter || isCloudRegistered)
-            // {
-            //     return UM.Theme.getIcon("printer_single")
-            // }
-            // else
-            // {
-            //     return ""
-            // }
-        }
-        font: UM.Theme.getFont("medium")
-        iconColor: UM.Theme.getColor("machine_selector_printer_icon")
-        iconSize: source != "" ? UM.Theme.getSize("machine_selector_icon").width: 0
 
-        // UM.RecolorImage
-        // {
-        //     id: connectionStatusImage
-        //     anchors
-        //     {
-        //         bottom: parent.bottom
-        //         left: parent.left
-        //         leftMargin: UM.Theme.getSize("thick_margin").width
-        //     }
-
-        //     source: UM.Theme.getIcon(connectionStatus)
-
-        //     width: UM.Theme.getSize("printer_status_icon").width
-        //     height: UM.Theme.getSize("printer_status_icon").height
-
-        //     color: connectionStatus == "printer_cloud_not_available" ? UM.Theme.getColor("cloud_unavailable") : UM.Theme.getColor("primary")
-
-        //     visible: isNetworkPrinter || isCloudRegistered
-
-        //     // Make a themable circle in the background so we can change it in other themes
-        //     Rectangle
-        //     {
-        //         id: iconBackground
-        //         anchors.centerIn: parent
-        //         // Make it a bit bigger so there is an outline
-        //         width: parent.width + 2 * UM.Theme.getSize("default_lining").width
-        //         height: parent.height + 2 * UM.Theme.getSize("default_lining").height
-        //         radius: Math.round(width / 2)
-        //         color: UM.Theme.getColor("main_background")
-        //         z: parent.z - 1
-        //     }
-
-        // }
-
-        // MouseArea // Connection status tooltip hover area
-        // {
-        //     id: connectionStatusTooltipHoverArea
-        //     anchors.fill: parent
-        //     hoverEnabled: getConnectionStatusMessage() !== ""
-        //     acceptedButtons: Qt.NoButton // react to hover only, don't steal clicks
-
-        //     onEntered:
-        //     {
-        //         machineSelector.mouseArea.entered() // we want both this and the outer area to be entered
-        //         tooltip.tooltipText = getConnectionStatusMessage()
-        //         tooltip.show()
-        //     }
-        //     onExited: { tooltip.hide() }
-        // }
-
-        // Cura.ToolTip
-        // {
-        //     id: tooltip
-
-        //     width: 250 * screenScaleFactor
-        //     tooltipText: getConnectionStatusMessage()
-        //     arrowSize: UM.Theme.getSize("button_tooltip_arrow").width
-        //     x: connectionStatusImage.x - UM.Theme.getSize("narrow_margin").width
-        //     y: connectionStatusImage.y + connectionStatusImage.height + UM.Theme.getSize("narrow_margin").height
-        //     z: popup.z + 1
-        //     targetPoint: Qt.point(
-        //         connectionStatusImage.x + Math.round(connectionStatusImage.width / 2),
-        //         connectionStatusImage.y
-        //     )
-        // }
+    headerItem:  UM.RecolorImage {
+        source: UM.Theme.getIcon("category_machine") 
+        color: UM.Theme.getColor("icon")
+        sourceSize: UM.Theme.getSize("button_icon")
     }
+    
+    // headerItem: Cura.IconWithText
+    // {
+    //     text:
+    //     {
+    //         // if (isNetworkPrinter && Cura.MachineManager.activeMachineNetworkGroupName != "")
+    //         // {
+    //         //     return Cura.MachineManager.activeMachineNetworkGroupName
+    //         // }
+    //         // if(Cura.MachineManager.activeMachine != null)
+    //         // {
+    //         //     return Cura.MachineManager.activeMachine.name
+    //         // }
+    //         return ""
+    //     }
+    //     source:
+    //     {
+    //         return UM.Theme.getIcon("category_machine") 
+    //         // if (isGroup)
+    //         // {
+    //         //     return UM.Theme.getIcon("printer_group")
+    //         // }
+    //         // else if (isNetworkPrinter || isCloudRegistered)
+    //         // {
+    //         //     return UM.Theme.getIcon("printer_single")
+    //         // }
+    //         // else
+    //         // {
+    //         //     return ""
+    //         // }
+    //     }
+    //     font: UM.Theme.getFont("medium")
+    //     iconColor: UM.Theme.getColor("machine_selector_printer_icon")
+    //     iconSize: source != "" ? UM.Theme.getSize("machine_selector_icon").width: 0
+
+    //     // UM.RecolorImage
+    //     // {
+    //     //     id: connectionStatusImage
+    //     //     anchors
+    //     //     {
+    //     //         bottom: parent.bottom
+    //     //         left: parent.left
+    //     //         leftMargin: UM.Theme.getSize("thick_margin").width
+    //     //     }
+
+    //     //     source: UM.Theme.getIcon(connectionStatus)
+
+    //     //     width: UM.Theme.getSize("printer_status_icon").width
+    //     //     height: UM.Theme.getSize("printer_status_icon").height
+
+    //     //     color: connectionStatus == "printer_cloud_not_available" ? UM.Theme.getColor("cloud_unavailable") : UM.Theme.getColor("primary")
+
+    //     //     visible: isNetworkPrinter || isCloudRegistered
+
+    //     //     // Make a themable circle in the background so we can change it in other themes
+    //     //     Rectangle
+    //     //     {
+    //     //         id: iconBackground
+    //     //         anchors.centerIn: parent
+    //     //         // Make it a bit bigger so there is an outline
+    //     //         width: parent.width + 2 * UM.Theme.getSize("default_lining").width
+    //     //         height: parent.height + 2 * UM.Theme.getSize("default_lining").height
+    //     //         radius: Math.round(width / 2)
+    //     //         color: UM.Theme.getColor("main_background")
+    //     //         z: parent.z - 1
+    //     //     }
+
+    //     // }
+
+    //     // MouseArea // Connection status tooltip hover area
+    //     // {
+    //     //     id: connectionStatusTooltipHoverArea
+    //     //     anchors.fill: parent
+    //     //     hoverEnabled: getConnectionStatusMessage() !== ""
+    //     //     acceptedButtons: Qt.NoButton // react to hover only, don't steal clicks
+
+    //     //     onEntered:
+    //     //     {
+    //     //         machineSelector.mouseArea.entered() // we want both this and the outer area to be entered
+    //     //         tooltip.tooltipText = getConnectionStatusMessage()
+    //     //         tooltip.show()
+    //     //     }
+    //     //     onExited: { tooltip.hide() }
+    //     // }
+
+    //     // Cura.ToolTip
+    //     // {
+    //     //     id: tooltip
+
+    //     //     width: 250 * screenScaleFactor
+    //     //     tooltipText: getConnectionStatusMessage()
+    //     //     arrowSize: UM.Theme.getSize("button_tooltip_arrow").width
+    //     //     x: connectionStatusImage.x - UM.Theme.getSize("narrow_margin").width
+    //     //     y: connectionStatusImage.y + connectionStatusImage.height + UM.Theme.getSize("narrow_margin").height
+    //     //     z: popup.z + 1
+    //     //     targetPoint: Qt.point(
+    //     //         connectionStatusImage.x + Math.round(connectionStatusImage.width / 2),
+    //     //         connectionStatusImage.y
+    //     //     )
+    //     // }
+    // }
 
     contentItem: Item
     {

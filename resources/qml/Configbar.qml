@@ -64,23 +64,25 @@ Item {
                 width: UM.Theme.getSize("button").width
                 height: UM.Theme.getSize("button").height
                 collapseButtonVisible: false
-                UM.RecolorImage {
-                    source: UM.Theme.getIcon("category_machine") 
-                    color: UM.Theme.getColor("icon")
-                    sourceSize: UM.Theme.getSize("button_icon")
-                    z: 3
-                }
+                // UM.RecolorImage {
+                //     source: UM.Theme.getIcon("category_machine") 
+                //     color: UM.Theme.getColor("icon")
+                //     sourceSize: UM.Theme.getSize("button_icon")
+                //     z: 3
+                // }
             }                   
             Cura.ConfigurationMenu {
                 id: configurationMenu
+                visible: true
                 width: UM.Theme.getSize("button").width
                 height: UM.Theme.getSize("button").height
                 collapseButtonVisible: false
-                UM.RecolorImage {
-                    source: UM.Theme.getIcon("settings") 
-                    color: UM.Theme.getColor("icon")
-                    sourceSize: UM.Theme.getSize("button_icon")
-                }
+                // UM.RecolorImage {
+                //     source: UM.Theme.getIcon("settings") 
+                //     color: UM.Theme.getColor("icon")
+                //     sourceSize: UM.Theme.getSize("button_icon")
+                //     z: 3
+                // }
             }   
            
 
