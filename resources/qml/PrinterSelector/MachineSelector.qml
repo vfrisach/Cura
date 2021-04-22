@@ -7,7 +7,7 @@ import QtQuick.Controls 2.3
 import UM 1.2 as UM
 import Cura 1.1 as Cura
 
-Cura.ExpandablePopup
+Cura.ExpandablePopupHorizontal
 {
     id: machineSelector
 
@@ -98,30 +98,31 @@ Cura.ExpandablePopup
     {
         text:
         {
-            if (isNetworkPrinter && Cura.MachineManager.activeMachineNetworkGroupName != "")
-            {
-                return Cura.MachineManager.activeMachineNetworkGroupName
-            }
-            if(Cura.MachineManager.activeMachine != null)
-            {
-                return Cura.MachineManager.activeMachine.name
-            }
+            // if (isNetworkPrinter && Cura.MachineManager.activeMachineNetworkGroupName != "")
+            // {
+            //     return Cura.MachineManager.activeMachineNetworkGroupName
+            // }
+            // if(Cura.MachineManager.activeMachine != null)
+            // {
+            //     return Cura.MachineManager.activeMachine.name
+            // }
             return ""
         }
         source:
         {
-            if (isGroup)
-            {
-                return UM.Theme.getIcon("printer_group")
-            }
-            else if (isNetworkPrinter || isCloudRegistered)
-            {
-                return UM.Theme.getIcon("printer_single")
-            }
-            else
-            {
-                return ""
-            }
+            return UM.Theme.getIcon("category_machine") 
+            // if (isGroup)
+            // {
+            //     return UM.Theme.getIcon("printer_group")
+            // }
+            // else if (isNetworkPrinter || isCloudRegistered)
+            // {
+            //     return UM.Theme.getIcon("printer_single")
+            // }
+            // else
+            // {
+            //     return ""
+            // }
         }
         font: UM.Theme.getFont("medium")
         iconColor: UM.Theme.getColor("machine_selector_printer_icon")

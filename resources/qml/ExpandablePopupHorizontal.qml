@@ -7,7 +7,7 @@ import QtQuick.Controls 2.3
 import UM 1.2 as UM
 import Cura 1.0 as Cura
 
-import QtGraphicalEffects 1.0 // For the dropshadow
+// import QtGraphicalEffects 1.0 // For the dropshadow
 
 // The expandable component has 2 major sub components:
 //      * The headerItem; Always visible and should hold some info about what happens if the component is expanded
@@ -74,11 +74,11 @@ Item
     // Change the contentItem close behaviour
     property alias contentClosePolicy : content.closePolicy
 
-    property alias headerShadowColor: shadow.color
+    // property alias headerShadowColor: shadow.color
 
-    property alias enableHeaderShadow: shadow.visible
+    // property alias enableHeaderShadow: shadow.visible
 
-    property int shadowOffset: 2
+    // property int shadowOffset: 2
 
     function toggleContent()
     {
@@ -195,30 +195,31 @@ Item
 
     }
 
-    DropShadow
-    {
-        id: shadow
-        // Don't blur the shadow
-        radius: 0
-        anchors.fill: background
-        source: background
-        verticalOffset: base.shadowOffset
-        visible: true
-        color: UM.Theme.getColor("action_button_shadow")
-        // Should always be drawn behind the background.
-        z: background.z - 1
-    }
+    // DropShadow
+    // {
+    //     id: shadow
+    //     // Don't blur the shadow
+    //     radius: 0
+    //     anchors.fill: background
+    //     source: background
+    //     horizontalOffset: base.shadowOffset
+    //     visible: true
+    //     color: UM.Theme.getColor("action_button_shadow")
+    //     // Should always be drawn behind the background.
+    //     z: background.z - 1
+    // }
 
     Popup
     {
         id: content
 
         // Ensure that the content is located directly below the headerItem
-        y: background.height + base.shadowOffset
-
+        //y: background.height + base.shadowOffset
+        y: background.y
+        x: background.x + background.width
         // Make the content aligned with the rest, using the property contentAlignment to decide whether is right or left.
         // In case of right alignment, the 3x padding is due to left, right and padding between the button & text.
-        x: contentAlignment == ExpandablePopup.ContentAlignment.AlignRight ? -width + collapseButton.width + headerItemLoader.width + 3 * background.padding : 0
+        //x: contentAlignment == ExpandablePopup.ContentAlignment.AlignRight ? -width + collapseButton.width + headerItemLoader.width + 3 * background.padding : 0
         padding: UM.Theme.getSize("default_margin").width
         closePolicy: Popup.CloseOnPressOutsideParent
 
@@ -241,6 +242,10 @@ Item
             content.width = contentItem.width + 2 * content.padding
             content.height = contentItem.height + 2 * content.padding
         }
+        // onClosed:
+        // {
+        //     parent.visible=false
+        // }
     }
 
     // DO NOT MOVE UP IN THE CODE: This connection has to be here, after the definition of the content item.

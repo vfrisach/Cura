@@ -14,7 +14,7 @@ import Cura 1.0 as Cura
  * Menu that allows you to select the configuration of the current printer, such
  * as the nozzle sizes and materials in each extruder.
  */
-Cura.ExpandablePopup
+Cura.ExpandablePopupHorizontal
 {
     id: base
 

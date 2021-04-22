@@ -46,117 +46,146 @@ Item {
         //     color: UM.Theme.getColor("lining")
         //     visible: extrudersModel.items.length > 1
         // }
+ 
 
         Column
         {
             id: columnButtons
 
-            anchors.topMargin: UM.Theme.getSize("default_margin").height
-            //anchors.top: pausaButton.bottom
-            anchors.right: parent.right
+            // anchors.topMargin: UM.Theme.getSize("default_margin").height
+
+            // anchors.right: parent.right
             spacing: UM.Theme.getSize("default_lining").height
-            ToolbarButton {
-                id: impresorasButton
-                //text: catalog.i18nc("@button", "Manage printers")
-                // anchors.topMargin: UM.Theme.getSize("default_margin").height
-                // anchors.top: columnButtons.bottom
-                // anchors.right: parent.right
-                spacing: UM.Theme.getSize("default_lining").height
-                enabled: true
-                onClicked: {
-                    machineSelection.visible = !machineSelection.visible;
-                    if (machineSelection.visible) {
-                        machineSelection.toggleContent(); 
-                    }                             
-                } 
-                toolItem: UM.RecolorImage {
+            Cura.MachineSelector {
+                id: machineSelection
+                visible: true
+                // anchors.left: parent.right
+                // anchors.top: parent.top
+                width: UM.Theme.getSize("button").width
+                height: UM.Theme.getSize("button").height
+                collapseButtonVisible: false
+                UM.RecolorImage {
                     source: UM.Theme.getIcon("category_machine") 
                     color: UM.Theme.getColor("icon")
                     sourceSize: UM.Theme.getSize("button_icon")
+                    z: 3
                 }
-                //Seleccion de impresora
-                Cura.MachineSelector {
-                    id: machineSelection
-                    visible: false
-                    z: 1
-                    anchors.left: parent.right
-                    anchors.top: parent.top
-                    height: 0
-                    width: 0
-                    collapseButtonVisible: false
-                    // Layout.minimumWidth: UM.Theme.getSize("machine_selector_widget").width
-                    Layout.maximumWidth: 0
-                    // Layout.fillWidth: true
-                }                
-
-            }
-            ToolbarButton {
-                id: settingsButton
-                //text: catalog.i18nc("@label", "Print settings")
-                // anchors.topMargin: UM.Theme.getSize("default_margin").height
-                // anchors.top: columnButtons.bottom
-                // anchors.right: parent.right
-                spacing: UM.Theme.getSize("default_lining").height
-                enabled: true
-                onClicked: {
-                    printSetup.visible = !printSetup.visible;
-                    if (!printSetup.expanded) {
-                        printSetup.toggleContent(); 
-                    }                                   
-                } 
-                toolItem: UM.RecolorImage {
+            }                   
+            Cura.ConfigurationMenu {
+                id: configurationMenu
+                width: UM.Theme.getSize("button").width
+                height: UM.Theme.getSize("button").height
+                collapseButtonVisible: false
+                UM.RecolorImage {
                     source: UM.Theme.getIcon("settings") 
                     color: UM.Theme.getColor("icon")
                     sourceSize: UM.Theme.getSize("button_icon")
                 }
-                //Menú de parámetros de impresión
-                Cura.PrintSetupSelector {
-                    id: printSetup
-                    visible: false
-                    z: 0
-                    anchors.left: parent.right
+            }   
+           
+
+            // ToolbarButton {
+            //     id: impresorasButton
+            //     //text: catalog.i18nc("@button", "Manage printers")
+            //     // anchors.topMargin: UM.Theme.getSize("default_margin").height
+            //     // anchors.top: columnButtons.bottom
+            //     // anchors.right: parent.right
+            //     spacing: UM.Theme.getSize("default_lining").height
+            //     enabled: true
+            //     onClicked: {
+            //         machineSelection.visible = !machineSelection.visible;
+            //         if (machineSelection.visible) {
+            //             machineSelection.toggleContent(); 
+            //         }                             
+            //     } 
+            //     toolItem: UM.RecolorImage {
+            //         source: UM.Theme.getIcon("category_machine") 
+            //         color: UM.Theme.getColor("icon")
+            //         sourceSize: UM.Theme.getSize("button_icon")
+            //     }
+            //     //Seleccion de impresora
+            //     Cura.MachineSelector {
+            //         id: machineSelection
+            //         visible: false
+            //         z: 1
+            //         anchors.left: parent.right
+            //         anchors.top: parent.top
+            //         height: 0
+            //         width: 0
+            //         collapseButtonVisible: false
+            //         // Layout.minimumWidth: UM.Theme.getSize("machine_selector_widget").width
+            //         Layout.maximumWidth: 0
+            //         // Layout.fillWidth: true
+            //     }                
+
+            // }
+            // ToolbarButton {
+            //     id: settingsButton
+            //     //text: catalog.i18nc("@label", "Print settings")
+            //     // anchors.topMargin: UM.Theme.getSize("default_margin").height
+            //     // anchors.top: columnButtons.bottom
+            //     // anchors.right: parent.right
+            //     spacing: UM.Theme.getSize("default_lining").height
+            //     enabled: true
+            //     onClicked: {
+            //         printSetup.visible = !printSetup.visible;
+            //         if (!printSetup.expanded) {
+            //             printSetup.toggleContent(); 
+            //         }                                   
+            //     } 
+            //     toolItem: UM.RecolorImage {
+            //         source: UM.Theme.getIcon("settings") 
+            //         color: UM.Theme.getColor("icon")
+            //         sourceSize: UM.Theme.getSize("button_icon")
+            //     }
+            //     //Menú de parámetros de impresión
+            //     Cura.PrintSetupSelector {
+            //         id: printSetup
+            //         visible: false
+            //         z: 0
+            //         anchors.left: parent.right
                     
-                    width: UM.Theme.getSize("print_setup_widget").width - 2 * UM.Theme.getSize("default_margin").width
-                    implicitWidth: 400 * screenScaleFactor
-                    height: parent.height
-                    // height: 0
-                    // width: 0
-                    //collapseButtonVisible: false
-                    // This is a work around to prevent the printSetupSelector from having to be re-loaded every time
-                    // a stage switch is done.
-                    // children: [printSetupSelector]
-                    // height: childrenRect.height
-                    // width: childrenRect.width
-                }               
+            //         width: UM.Theme.getSize("print_setup_widget").width - 2 * UM.Theme.getSize("default_margin").width
+            //         implicitWidth: 400 * screenScaleFactor
+            //         height: parent.height
+            //         // height: 0
+            //         // width: 0
+            //         //collapseButtonVisible: false
+            //         // This is a work around to prevent the printSetupSelector from having to be re-loaded every time
+            //         // a stage switch is done.
+            //         // children: [printSetupSelector]
+            //         // height: childrenRect.height
+            //         // width: childrenRect.width
+            //     }               
 
-            }
-            ToolbarButton {
-                id: extrudersButton
-                text: catalog.i18nc("@label", "Configuration Panel")
+            // }
+            // ToolbarButton {
+            //     id: extrudersButton
+            //     text: catalog.i18nc("@label", "Configuration Panel")
 
-                spacing: UM.Theme.getSize("default_lining").height
-                enabled: true
-                onClicked: {
-                    configurationMenu.visible = !configurationMenu.visible;   
-                    if (configurationMenu.visible) {
-                        configurationMenu.toggleContent(); 
-                    }                                 
-                } 
-                toolItem: UM.RecolorImage {
-                    source: UM.Theme.getIcon("extruder_button") 
-                    color: UM.Theme.getColor("icon")
-                    sourceSize: UM.Theme.getSize("button_icon")
-                }
-                       //Menú extruders
-                Cura.ConfigurationMenu {
-                    visible: false
-                    id: configurationMenu
-                    z: 0
-                    anchors.left: parent.right
-                    width: UM.Theme.getSize("configuration_selector").width
-                    height: parent.height
-                } 
-            }
+            //     spacing: UM.Theme.getSize("default_lining").height
+            //     enabled: true
+            //     onClicked: {
+            //         configurationMenu.visible = !configurationMenu.visible;   
+            //         if (configurationMenu.visible) {
+            //             configurationMenu.toggleContent(); 
+            //         }                                 
+            //     } 
+            //     toolItem: UM.RecolorImage {
+            //         source: UM.Theme.getIcon("extruder_button") 
+            //         color: UM.Theme.getColor("icon")
+            //         sourceSize: UM.Theme.getSize("button_icon")
+            //     }
+            //            //Menú extruders
+            //     Cura.ConfigurationMenu {
+            //         visible: false
+            //         id: configurationMenu
+            //         z: 0
+            //         anchors.left: parent.right
+            //         width: UM.Theme.getSize("configuration_selector").width
+            //         height: parent.height
+            //     } 
+            // }
         } 
     }
 
