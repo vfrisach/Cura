@@ -98,6 +98,7 @@ from cura.Settings.ExtruderStack import ExtruderStack
 from cura.Settings.GlobalStack import GlobalStack
 from cura.Settings.IntentManager import IntentManager
 from cura.Settings.MachineManager import MachineManager
+from cura.Settings.PrintModesModel import PrintModesModel
 from cura.Settings.MachineNameValidator import MachineNameValidator
 from cura.Settings.MaterialSettingsVisibilityHandler import MaterialSettingsVisibilityHandler
 from cura.Settings.SettingInheritanceManager import SettingInheritanceManager
@@ -836,6 +837,8 @@ class CuraApplication(QtApplication):
         self._add_printer_pages_model_without_cancel.initialize(cancellable = False)
         self._whats_new_pages_model.initialize()
 
+
+      
         # Initialize the FileProviderModel
         self._file_provider_model.initialize(self._onFileProviderEnabledChanged)
 
@@ -1149,6 +1152,7 @@ class CuraApplication(QtApplication):
         qmlRegisterType(AddPrinterPagesModel, "Cura", 1, 0, "AddPrinterPagesModel")
         qmlRegisterType(TextManager, "Cura", 1, 0, "TextManager")
         qmlRegisterType(RecommendedMode, "Cura", 1, 0, "RecommendedMode")
+        qmlRegisterType(PrintModesModel, "Cura", 1, 0, "PrintModesModel")
 
         self.processEvents()
         qmlRegisterType(NetworkMJPGImage, "Cura", 1, 0, "NetworkMJPGImage")

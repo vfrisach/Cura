@@ -52,7 +52,7 @@ Item
             property alias _hovered: enableSupportMouseArea.containsMouse
 
             style: UM.Theme.styles.checkbox
-            enabled: recommendedPrintSetup.settingsEnabled
+            enabled: true//recommendedPrintSetup.settingsEnabled
 
             visible: supportEnabled.properties.enabled == "True"
             checked: supportEnabled.properties.value == "True"
@@ -88,7 +88,7 @@ Item
                 verticalCenter: parent.verticalCenter
             }
 
-            enabled: recommendedPrintSetup.settingsEnabled
+            enabled: true//recommendedPrintSetup.settingsEnabled
             visible: enableSupportCheckBox.visible && (supportEnabled.properties.value == "True") && (extrudersEnabledCount.properties.value > 1)
             textRole: "name"  // this solves that the combobox isn't populated in the first time Cura is started
 

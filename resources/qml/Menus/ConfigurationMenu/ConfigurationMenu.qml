@@ -6,8 +6,12 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.3
 
+import QtQuick.Controls 1.1 as OldControls
+
 import UM 1.2 as UM
 import Cura 1.0 as Cura
+
+import "../../PrintSetupSelector/Recommended"
 
 
 /**
@@ -159,11 +163,11 @@ Cura.ExpandablePopupHorizontal
                 var height = 0
                 if (autoConfiguration.visible)
                 {
-                    height += autoConfiguration.height
+                    height += autoConfiguration.height// + supportSelector.height + (supportSelector.padding + 2)
                 }
                 if (customConfiguration.visible)
                 {
-                    height += customConfiguration.height
+                    height += customConfiguration.height //+ supportSelector.height + (supportSelector.padding + 2)
                 }
                 return height
             }
@@ -179,7 +183,49 @@ Cura.ExpandablePopupHorizontal
                 id: customConfiguration
                 visible: popupItem.configuration_method == ConfigurationMenu.ConfigurationMethod.Custom
             }
+
+
+
+
         }
+
+        Control {
+
+            // padding:10
+            // bottomPadding: 10
+            id: controlSupport
+            width: parent.width
+            height: 20//supportSelector.height + 10;
+
+            contentItem: RecommendedSupportSelector {
+                id: supportSelector
+                width: parent.width
+                //anchors.top : customConfiguration.bottom
+            }
+        }
+
+        Control {
+
+            // padding:10
+            // bottomPadding: 10
+            id: printModeControl
+            width: parent.width
+            height: 20//supportSelector.height + 10;
+
+            contentItem: PrintModeComboBox {
+                id: printModeCombobox
+                visible: true//!hideSettings && !monitoringPrint && !hideView && printModeEnabled
+                height: parent.height
+                width: parent.width
+
+                onShowTooltip: base.showTooltip(item, location, text)
+                onHideTooltip: base.hideTooltip()
+            }
+        }
+
+        
+
+      
 
         Rectangle
         {
@@ -241,5 +287,13 @@ Cura.ExpandablePopupHorizontal
     {
         target: Cura.MachineManager
         onGlobalContainerChanged: popupItem.manual_selected_method = -1  // When switching printers, reset the value of the manual selected method
+    }
+
+    UM.SettingPropertyProvider {
+        id: extrudersEnabledCount
+        containerStack: Cura.MachineManager.activeMachine
+        key: "extruders_enabled_count"
+        watchedProperties: [ "value" ]
+        storeIndex: 0
     }
 }

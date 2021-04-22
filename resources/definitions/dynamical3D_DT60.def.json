@@ -40,6 +40,9 @@
         "machine_depth": {
             "default_value": 450
         },
+        "print_mode": { 
+            "enabled": true 
+        },
         "machine_center_is_zero": {
             "default_value": false
         },

@@ -6162,6 +6162,39 @@
             "description": "Non-traditional ways to print your models.",
             "children":
             {
+                "print_mode":
+                {
+                    "label": "Print Mode",
+                    "description": "Choose the print mode.",
+                    "type": "enum",
+                    "options":
+                    {
+                        "extrusor1": "Extrusor 1",
+                        "reflex": "Reflex",
+                        "twin": "Twin"
+                    },
+                    "default_value": "extrusor1",
+                    "enabled": false,
+                    "settable_per_extruder": false,
+                    "comments": "Dynamical3D setting"
+                },
+                "print_mode_gcode":
+                {
+                    "label": "Print Mode GCode",
+                    "description": "GCode to enable selected print mode.",
+                    "type": "enum",
+                    "options":
+                    {
+                        "": "Extrusor 1",
+                        "M605 S6      ;enable reflex mode": "Reflex",
+                        "M605 S5      ;enable twin mode": "Twin"
+                    },
+                    "default_value": "Extrusor 1",
+                    "value": "'' if print_mode == 'Extrusor 1' else 'M605 S6      ;enable reflex mode' if print_mode == 'reflex' else 'M605 S5      ;enable twin mode'",
+                    "enabled": false,
+                    "settable_per_extruder": false,
+                    "comments": "Dynamical3D setting"
+                },
                 "print_sequence":
                 {
                     "label": "Print Sequence",
