@@ -35,7 +35,7 @@ Item
         anchors.left: parent.left
         visible: true
         source: UM.Theme.getIcon("category_machine")
-        text: catalog.i18nc("@label", printMode.properties.label)
+        text: catalog.i18nc("@label print mode", "Print Mode")
        
         font: UM.Theme.getFont("medium")
         width: labelColumnWidth

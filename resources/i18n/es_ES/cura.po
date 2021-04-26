@@ -5260,10 +5260,10 @@ msgctxt "@label"
 msgid "What's new in Ultimaker Cura"
 msgstr "Novedades en Ultimaker Cura"
 
-#: PrintModeCombobox.qml
-msgctxt "@label"
+#: /home/trin/Gedeeld/Projects/Cura/resources/qml/Menus/ConfigurationMenu/PrintModeCombobox.qml:
+msgctxt "@label print mode"
 msgid "Print Mode"
-msgstr "Modo de impresión"
+msgstr "Modo de Impresión"
 
 #: ModelChecker/plugin.json
 msgctxt "description"

@@ -5581,6 +5581,12 @@ msgctxt "@label"
 msgid "What's new in Ultimaker Cura"
 msgstr ""
 
+#: PrintModeCombobox.qml:
+msgctxt "@label print mode"
+msgid "Print Mode"
+msgstr ""
+
+
 #: ModelChecker/plugin.json
 msgctxt "description"
 msgid ""
@@ -6169,7 +6175,3 @@ msgctxt "name"
 msgid "X-Ray View"
 msgstr ""
 
-#: PrintModeCombobox.qml:
-msgctxt "@label"
-msgid "Print Mode"
-msgstr ""
